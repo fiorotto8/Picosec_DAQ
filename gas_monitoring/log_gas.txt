@@ -1,0 +1,200 @@
+1685108687.484873Worked well
+2023-05-26Worked well
+2023-05-26 15:49:41.453654 Worked well
+2023-05-26 16:02:59.810447 Worked well
+ven 26 mag 2023, 16:16:01, CEST
+ven 26 mag 2023, 16:23:01, CEST
+ven 26 mag 2023, 16:38:01, CEST
+2023-05-29 09:31:12.985747 Worked well
+2023-05-29 09:39:35.784823 Worked well
+2023-05-29 10:08:35.058809 Worked well
+2023-05-29 12:30:40.155976 Worked well
+2023-05-29 13:34:36.152857 Worked well
+2023-06-07 16:24:54.544556 Worked well
+2023-06-07 17:03:01.649774 Worked well
+2023-06-07 17:06:34.919425 Worked well
+2023-06-07 17:07:45.193150 Worked well
+2023-06-07 23:59:01.930889 Worked well
+2023-06-08 10:28:39.607554 Worked well
+2023-06-08 10:29:57.015003 Worked well
+2023-06-08 10:29:57.015182 closed by SIGINT
+2023-06-08 10:59:02.622838 started
+Traceback (most recent call last):
+  File "/home/cms3/influxdb/gas.py", line 46, in <module>
+    gf.toFluxdb("VOC [Ohm]", response[3],  bucket, write_api,  org, location)        #send voc as resistance of sensor
+IndexError: index 2 is out of bounds for axis 0 with size 2
+2023-06-08 11:02:02.252760 started
+Traceback (most recent call last):
+  File "/home/cms3/influxdb/gas.py", line 46, in <module>
+    gf.toFluxdb("VOC [Ohm]", response[3],  bucket, write_api,  org, location)        #send voc as resistance of sensor
+IndexError: index 3 is out of bounds for axis 0 with size 3
+2023-06-08 11:54:02.524038 started
+Traceback (most recent call last):
+  File "/home/cms3/influxdb/gas.py", line 46, in <module>
+    gf.toFluxdb("VOC [Ohm]", response[3],  bucket, write_api,  org, location)        #send voc as resistance of sensor
+IndexError: index 3 is out of bounds for axis 0 with size 3
+2023-06-08 11:56:01.779199 started
+Traceback (most recent call last):
+  File "/home/cms3/influxdb/gas.py", line 39, in <module>
+    response=gf.readArd(portname, baud)  #read arduino data
+  File "/home/cms3/influxdb/gas_function.py", line 19, in readArd
+    response=ser.readline()  #read arduino data from serial port, read until the end of the line
+  File "/home/cms3/.local/lib/python3.10/site-packages/serial/serialposix.py", line 595, in read
+    raise SerialException(
+serial.serialutil.SerialException: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+2023-06-08 11:57:11.549235 closed by SIGINT
+2023-06-08 11:57:29.005236 started
+2023-06-08 11:59:32.860442 started
+2023-06-08 12:02:45.463989 started
+2023-06-08 12:09:09.543078 started
+2023-06-08 12:10:26.190759 started
+2023-06-08 12:18:02.401372 started
+Traceback (most recent call last):
+  File "/home/cms3/influxdb/gas.py", line 39, in <module>
+    response=gf.readArd(portname, baud)  #read arduino data
+  File "/home/cms3/influxdb/gas_function.py", line 19, in readArd
+    response=ser.readline()  #read arduino data from serial port, read until the end of the line
+  File "/home/cms3/.local/lib/python3.10/site-packages/serial/serialposix.py", line 565, in read
+    ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+KeyboardInterrupt
+2023-06-08 12:25:03.822516 started
+2023-06-08 12:25:35.390113 started
+2023-06-08 12:26:59.737344 started
+2023-06-08 12:34:38.517842 started
+2023-06-08 12:36:02.428786 started
+2023-06-08 12:50:29.416376 started
+2023-06-08 12:51:52.780756 started
+2023-06-08 13:01:31.072018 started
+2023-06-08 13:02:11.274925 started
+2023-06-08 14:02:37.382456 started
+2023-06-08 14:05:07.007068 started
+2023-06-08 14:08:23.588812 started
+2023-06-08 14:08:57.304512 started
+2023-06-08 14:22:02.077253 started
+2023-06-08 14:22:19.706032 started
+2023-06-08 14:22:36.687026 started
+2023-06-08 14:22:56.697347 started
+2023-06-08 14:24:34.039859 started
+2023-06-08 14:30:40.065490 started
+2023-06-08 14:34:29.159715 started
+2023-06-08 14:36:10.540690 started
+2023-06-08 14:36:22.130994 started
+2023-06-08 14:37:18.982834 started
+2023-06-08 14:38:25.384276 started
+2023-06-08 14:38:57.030444 started
+2023-06-08 14:39:26.796589 started
+2023-06-08 14:40:15.458196 started
+2023-06-08 15:24:39.149313 started
+2023-06-08 15:25:16.218523 started
+2023-06-08 15:25:34.890482 started
+2023-06-08 15:26:20.017289 started
+2023-06-08 15:26:27.439369 started
+2023-06-08 16:03:53.175033 closed by SIGINT
+2023-06-08 16:05:01.748968 closed by SIGINT
+2023-06-08 16:06:34.802762 closed by SIGINT
+2023-06-08 16:42:14.211749 closed by SIGINT
+2023-06-08 23:59:01.094597 closed by SIGINT
+2023-06-09 00:00:04.387106 started
+2023-06-09 09:20:15.260606 closed by SIGINT
+2023-06-09 09:21:18.875314 started
+2023-06-09 09:22:52.613627 closed by SIGINT
+2023-06-09 09:25:02.443886 started
+Traceback (most recent call last):
+  File "/home/cms3/.local/lib/python3.10/site-packages/serial/serialposix.py", line 621, in write
+    n = os.write(self.fd, d)
+OSError: [Errno 5] Input/output error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/cms3/influxdb/gas.py", line 43, in <module>
+    ser.write(b'R') # write R to ask data from arduino 
+  File "/home/cms3/.local/lib/python3.10/site-packages/serial/serialposix.py", line 655, in write
+    raise SerialException('write failed: {}'.format(e))
+serial.serialutil.SerialException: write failed: [Errno 5] Input/output error
+2023-06-09 12:10:20.919807 started
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 445, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 440, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1374, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/lib/python3.10/socket.py", line 705, in readinto
+    return self._sock.recv_into(b)
+TimeoutError: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/cms3/influxdb/gas.py", line 51, in <module>
+    gf.toFluxdb("Temperature [K]", response[0], bucket, write_api, org, location)  #send temperature
+  File "/home/cms3/influxdb/gas_function.py", line 48, in toFluxdb
+    api.write(bucket=bucket, org=org, record=point)  #write the defined point in the database
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/client/write_api.py", line 378, in write
+    results = list(map(write_payload, payloads.items()))
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/client/write_api.py", line 376, in write_payload
+    return self._post_write(_async_req, bucket, org, final_string, payload[0])
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/client/write_api.py", line 509, in _post_write
+    return self._write_service.post_write(org=org, bucket=bucket, body=body, precision=precision,
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/service/write_service.py", line 60, in post_write
+    (data) = self.post_write_with_http_info(org, bucket, body, **kwargs)  # noqa: E501
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/service/write_service.py", line 90, in post_write_with_http_info
+    return self.api_client.call_api(
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/_sync/api_client.py", line 343, in call_api
+    return self.__call_api(resource_path, method,
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/_sync/api_client.py", line 173, in __call_api
+    response_data = self.request(
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/_sync/api_client.py", line 388, in request
+    return self.rest_client.POST(url,
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/_sync/rest.py", line 311, in POST
+    return self.request("POST", url,
+  File "/home/cms3/.local/lib/python3.10/site-packages/influxdb_client/_sync/rest.py", line 220, in request
+    r = self.pool_manager.request(
+  File "/usr/lib/python3/dist-packages/urllib3/request.py", line 78, in request
+    return self.request_encode_body(
+  File "/usr/lib/python3/dist-packages/urllib3/request.py", line 170, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/usr/lib/python3/dist-packages/urllib3/poolmanager.py", line 375, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 507, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/usr/lib/python3/dist-packages/six.py", line 719, in reraise
+    raise value
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 447, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 336, in _raise_timeout
+    raise ReadTimeoutError(
+urllib3.exceptions.ReadTimeoutError: HTTPConnectionPool(host='localhost', port=8086): Read timed out. (read timeout=9.99966016999997)
+2023-06-09 12:16:02.979365 started
+2023-06-09 23:59:01.478065 closed by SIGINT
+2023-06-10 00:00:03.025591 started
+2023-06-10 23:59:01.472623 closed by SIGINT
+2023-06-11 00:00:04.521033 started
+2023-06-11 23:59:01.540597 closed by SIGINT
+2023-06-12 00:00:06.550570 started
+2023-06-12 23:59:01.597296 closed by SIGINT
+2023-06-13 00:00:03.068359 started
+Traceback (most recent call last):
+  File "/home/cms3/.local/lib/python3.10/site-packages/serial/serialposix.py", line 621, in write
+    n = os.write(self.fd, d)
+OSError: [Errno 5] Input/output error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/cms3/influxdb/gas.py", line 43, in <module>
+    ser.write(b'R') # write R to ask data from arduino 
+  File "/home/cms3/.local/lib/python3.10/site-packages/serial/serialposix.py", line 655, in write
+    raise SerialException('write failed: {}'.format(e))
+serial.serialutil.SerialException: write failed: [Errno 5] Input/output error
+2023-06-13 10:10:04.430452 started
