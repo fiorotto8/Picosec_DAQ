@@ -4,6 +4,14 @@ This folder contains the tools useful to accomplish DAQ of a gas detector like P
 Soon will be added a third repository in which will be stored the code for the DAQ from the scope.
 
 # Requirements
+For the monitoring of the HV:
+1. Add the `CAENHVWrapper-6.3/bin/x86_64/` folder to your `$LD_LIBRARY_PATH` environment variable.
+2. Install pycaenhv:
+```bash
+cd pycaenhv
+python3 -m pip install --user -U .
+```
+These instructions will be repeated in the `HV_monitoring` folder.
 
 # Description of the programs
 In this section a brief description of the folders content and how it works will be given.
@@ -15,13 +23,13 @@ Than the data collected are stored in inFluxdb, that provides to take into accou
 The command line that starts the monitoring is:
 ``python3 gas.py``
 
-## use of crontab
+### use of crontab
 The program is thinked to be started with as a cronjob as in the following example.
 Open crontab:
-``crontab -e ``
+-``crontab -e ``
 install a cronjob:
-``0 0 * * * python3 path_to_file/gas.py >> path_to_logfile/logfile.txt 2>&1``
-``59 23 * * * ps -axu | grep gas.py | awk '{print $2}' | xargs kill -SIGINT``
+- ``0 0 * * * python3 path_to_file/gas.py >> path_to_logfile/logfile.txt 2>&1``
+- ``59 23 * * * ps -axu | grep gas.py | awk '{print $2}' | xargs kill -SIGINT``
 The two rows written above allow the code to start every day at 00:00 and to kill the program sending a `SIGINT` signal every day at 23:59.
 `2>&1` is used to write an error message in the log file if something in the cronjob doesn't work.
 
@@ -37,12 +45,12 @@ The two rows written above allow the code to start every day at 00:00 and to kil
  
  ### gas_function.py
 This program contains all the definition of function used in `gas.py`.
-- `log()` writes a string in the log file
+- `log()` writes a string in the log file preceded by the datetime
 - `decodeArd()` decodes Arduino response and gives back a `numpy` array of floats, cleaned of special character like "\n"
 - `toFluxdb()` creates and writes measure points in the database of inFluxdb
 - `query()` creates a inFluxdb query that allow the user to get the data back filtered by time, this function is used in `fromFlux()`
 - `readTable()` is used to read the right value from the output of the query, this function is used in `fromFlux()`
--`fromFluxdb()` uses `query()` and `readTable()` to send a query to the database and to give the response back to the user. The boolean parameter `mean` allows the user to get the mean value of the selecter quantity in the selected period of time instead of the raw table.
+- `fromFluxdb()` uses `query()` and `readTable()` to send a query to the database and to give the response back to the user. The boolean parameter `mean` allows the user to get the mean value of the selecter quantity in the selected period of time instead of the raw table.
 To better understand how the functions work and what parameters they need consult the code itself.
 
 ### gas_query.py
@@ -55,3 +63,29 @@ This il an example of log file where the codes will write short messages in orde
 - Be careful with the serial port name in `gas.py` after every reboot of the computer, it can be different.
 - Use option `2>&1` in the cronjob, otherwise if there is a problem opening the file the error reamains silent and it's difficult to debug.
 - Write the inFlux token explicitely when is needed if you are using a cronjob, otherwise the program will not be able to write anything in the database because it will require the authentication.
+- Specify the complete path of the file when using a cronjob
+
+## HV_monitoring
+This folder contains the code used to monitor (and control) the HV that is provided by a `CAEN R1470ET` power supply. The connection between the PS and the computer is operated with an ethernet cable, so the code is deloveped using the tcp/ip protocol but the folder contains also programs for the serial port communication usage.
+The principle of functioning is now given: with the command:
+- ``python3 rpc.py <specify_board_ip_address_here>`` 
+is initialysed the server that is connected with the PS. Then the coomand:
+- ``python3 hv_logging.py`` 
+initialyses the client and it will connect to the server in order to get the data from the PS.
+This complicated system is needed because the PS doesn't support multiple clients connections, so if the computer starts the communication with the PS in order to automatically monitor the parameters, it became impossible to set new values of voltage or current and all the way round.
+After getting the parameters values the code will write them into a database in inFluxdb as the previous case of the gas monitoring.
+
+### CAENHVWrapper-6.3 and env.sh
+Folder that contains the wrapper code in order to use python language for the communication with the PS which library are written in C.
+`env.sh` is a bash script that export the library path.
+### gas_function
+This file is the same as the previous section.
+
+### log_hv.txt
+log file where the programs eventually writes error messages or writes when they starts or stops.
+
+### README.md
+This README file contains the same instructions repeated in the `Requirements` section.
+
+### notes
+- Pay attenction to not open the PS interface provided by the official app while the server is working because PS can connect only to one client at time, so it will risult in a silent error or in a communication problem displayed in the log file and there is not other solutions (or at least I don't know other solutions) than shut down the PS, wait some time and then restart it.
