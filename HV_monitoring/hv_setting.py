@@ -26,7 +26,7 @@ def main():
     
     if args.channel>=5:
         gf.log("ERROR while changing PS parameters, missing channel indication or channel number too large", path=log_path)
-        sys.exit(0)
+        sys.exit(1)
 
     port = 8000
     hv_client = ServerProxy(f"http://localhost:{port}")

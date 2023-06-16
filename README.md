@@ -57,7 +57,7 @@ To better understand how the functions work and what parameters they need consul
 This code is only a brief example of how to make a query to inFluxdb and is probably useful for the data analysis.
 
 ### log_gas.txt
-This il an example of log file where the codes will write short messages in order to take track of errors.
+This is an example of log file where the codes will write short messages in order to take track of errors.
 
 ### notes
 - Be careful with the serial port name in `gas.py` after every reboot of the computer, it can be different.
@@ -75,6 +75,55 @@ initialyses the client and it will connect to the server in order to get the dat
 This complicated system is needed because the PS doesn't support multiple clients connections, so if the computer starts the communication with the PS in order to automatically monitor the parameters, it became impossible to set new values of voltage or current and all the way round.
 After getting the parameters values the code will write them into a database in inFluxdb as the previous case of the gas monitoring.
 
+### rpc.py
+This program is the server that connects to the PS. 
+In the initial part is defined the Hvservise class with some function used to get or set the PS parameters.
+In the `main()` part the server try to connects to the PS. If the connection is accepted then a message is write in the log file, if in not an error message is written instead and an error is raised.
+The server is defined in localhost port 8000 by default. Than the server is ready to take connections of clients.
+If the program isn't started in background the code will write in the terminal page every action that is done by the clients connected with it.
+When a keyboard interrupt is given, the code will write a status string on the log file and then the system will exit without errors reported.
+This program makes direct use of `hv.py` and `gas_funtion.py`.
+
+### hv.py
+In this code is defined the class `Board` useful in order to connect to various type of CAEN boards.
+The class is initialysed specifying the board type (in this ncase a N1470) and the type of connection (TCPIP protocol). In this step the wrapper code for python is used. If the connection is succesfully done a string is printed.
+The function defined for this class are the ones used to get and change the board parameters.
+
+### hv_logging.py
+This code is the one which connects with the server in order to monitor the hv status, so is the client.
+Since the data are stored in inFluxdb database, the initial part of the program is used for the configuration of the inFlux client. The parameters needed to connect with the database are now specified.
+The labels for the measured current are also speciefied, this is due to the fact that the instrument provides two different type of scales for the current measure, one with higher precision than the other, so if you want to obtain the measured current you need to ask for both IMonH and IMonL and see what of this two parameters is not 0. For better understanding how the current measurement is done it can be useful to consult the manual which link is reported in the notes at the end of this part.
+Than the inFlux client is started.
+After that the code will try to connect with the server created with `rpc.py`. The connection opens the localhost port 8000 by default because that is the default setted in `rpc.py`, but if it's needed the user can set another port when the program is started by terminal command line by specifying the new port name after the command itself, like the following exemple:
+- ``python3 hv_logging <port_number>``.
+If the connection to the server is succesfully established, than a message is written in the log file.
+Than an infinite while loop is started in order to monitor periodically the PS parameters.
+In the loop the program will ask to the server to get the measured and the setted values of both current and voltage, for every channel in the board (4 channels in this case). The request is thinked to be easily modified in the case of multi-board connection.
+Afetr taking the data from the server, the code provides to create and write the points in inFluxdb. A time sleep of five seconds is setted between a measure and another.
+The loop is designed to stop, write a closing message in the log file and exit from the program when a keyboard interrupt is given.
+
+### hv_setting.py
+This code is used set the PS parameters to different values. The parameters are defined in the data sheet that can be found using the link in the note at the end of the section.
+At the beginning of the program are defined the labels for the measured current as explained before for `hv_logging`.
+When the `main()` part start, a list of parser arguments are defined in order to set the right parameter.
+The option must be given in the command line as in the following example:
+- ``python3 hv_setting.py -c 3 -v 250 -i 2``,
+this line will set the voltage at 250V in the 3rd channel of the 0 board and the current limit at 2uA in the same board and channel.
+The list of arguments is printed by the command:
+- ``python3 hv_setting.py -h``.
+The arguments are:
+- `-p` to select the localhost port of the connection, by deafult this parameter is 8000 because is the default defined in the server code `rpc.py`
+- `-v` to set the voltage at the value specified in the command in the selected channel (oprtion `-c`) `(V)`
+- `-i` to set the current at the value specified in the command in the selected channel (oprtion `-c`) `(uA)`
+- `-c` to set the channel of the power supply in which operate the changes
+- `-b` to set the board in which operate the changes, if there are more than one. The default for this option is `0` so if there is only one board the right value for this argument is already setted.
+Please pay attenction of the board parameters limits defined in the manual of the PS you are using. In particular is useful to menction that the board CAEN R1470 has four channel numerated from 0 to 3 and NOT starting by 1.
+After the definitions the program will control if the user specify the channel number and if the number in input corrispond to an existing channel in the PS. The specification of the channel number in the command line is mandatory and if this parameter is not provided the code will print an error message in the log file and an error is raised before closing the program execution.
+Then the program will take the measure of current and voltage in the selected channel.
+After that the code check for what parameter the user is asking for change and set the value specified in the command line. 
+Is possible to change simultaneously current and voltage in one channel, but not to change any values in more than one channel at time.
+If neither the current or the voltage is specified a possible error message is written in the log file and obviously nothing is changed. If the new values of current or voltage are the same as the measurement performed before in the code, a possible error message is written in the log file in order to let the user aware that he probably write the wrong command.
+
 ### CAENHVWrapper-6.3 and env.sh
 Folder that contains the wrapper code in order to use python language for the communication with the PS which library are written in C.
 `env.sh` is a bash script that export the library path.
@@ -89,3 +138,8 @@ This README file contains the same instructions repeated in the `Requirements` s
 
 ### notes
 - Pay attenction to not open the PS interface provided by the official app while the server is working because PS can connect only to one client at time, so it will risult in a silent error or in a communication problem displayed in the log file and there is not other solutions (or at least I don't know other solutions) than shut down the PS, wait some time and then restart it.
+- If you run the server and the client (`rpc.py` and `hv_logging.py`) by a setted cronjob please pay attenction to the notes for crontab in the previous section and to the fact that the server need some time to establish the connection and to be ready for support the communication with the clients.
+- The server can operate one action at a time, so it can be blocked if you try to do something while `hv_logging` is measuring if the delay between to measures is too short.
+- The parameters of the R1470 CAEN power supply boards are defined in the data sheet of the instrument found in `https://www.caen.it/products/r1470et/`
+- When setting the parameters of the power supply pay attenction to not overcome the limits specified in the manual of the PS.
+- Pay attenction that the numeration of the channel starts from 0 and NOT from 1. When setting new values for the parameters the code will verify that the channel number is not bigger than the maximum existing but is impossible to check if the user write the right channel number! When starting `hv_setting.py` the option `-c <number_of_the_channel>` is mandatory.
