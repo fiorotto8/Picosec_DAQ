@@ -59,6 +59,9 @@ This code is only a brief example of how to make a query to inFluxdb and is prob
 ### log_gas.txt
 This is an example of log file where the codes will write short messages in order to take track of errors.
 
+#### ReadAnalog.ino
+Arduino code used to control the bme680 sensor in order to measure pressure, temperature, humidity and VOC of the gas.
+
 ### notes
 - Be careful with the serial port name in `gas.py` after every reboot of the computer, it can be different.
 - Use option `2>&1` in the cronjob, otherwise if there is a problem opening the file the error reamains silent and it's difficult to debug.
