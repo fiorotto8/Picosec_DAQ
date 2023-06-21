@@ -139,6 +139,9 @@ log file where the programs eventually writes error messages or writes when they
 ### README.md
 This README file contains the same instructions repeated in the `Requirements` section.
 
+### hvserial.py and instrument.py
+This programs are used in order to communicate with the board via serial port. So they are not needed in the current operation of the PS but are stored anyway in this folder for the future.
+
 ### notes
 - Pay attenction to not open the PS interface provided by the official app while the server is working because PS can connect only to one client at time, so it will risult in a silent error or in a communication problem displayed in the log file and there is not other solutions (or at least I don't know other solutions) than shut down the PS, wait some time and then restart it.
 - If you run the server and the client (`rpc.py` and `hv_logging.py`) by a setted cronjob please pay attenction to the notes for crontab in the previous section and to the fact that the server need some time to establish the connection and to be ready for support the communication with the clients.
@@ -146,3 +149,4 @@ This README file contains the same instructions repeated in the `Requirements` s
 - The parameters of the R1470 CAEN power supply boards are defined in the data sheet of the instrument found in `https://www.caen.it/products/r1470et/`
 - When setting the parameters of the power supply pay attenction to not overcome the limits specified in the manual of the PS.
 - Pay attenction that the numeration of the channel starts from 0 and NOT from 1. When setting new values for the parameters the code will verify that the channel number is not bigger than the maximum existing but is impossible to check if the user write the right channel number! When starting `hv_setting.py` the option `-c <number_of_the_channel>` is mandatory.
+- The log path file is written in every program, so if you want to change it you must be careful to change it every time adding a new path.
