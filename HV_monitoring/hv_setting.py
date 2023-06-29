@@ -16,7 +16,7 @@ log_path='/home/cms3/influxdb/ftmdaqAntonello/log_hv.txt'
 
 def main():
 #define parser arguments
-    parser = argparse.ArgumentParser(description='Record L1As')
+    parser = argparse.ArgumentParser(description='PS settings')
     parser.add_argument("-p","--port ", type=int, default=8000, help="select port, defult 8000") 
     parser.add_argument("-v", "--voltage", type=int, default=None, help="change voltage")
     parser.add_argument("-i", "--current", type=int, default=None, help="change current")

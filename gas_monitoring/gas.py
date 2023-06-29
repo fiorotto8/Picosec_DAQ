@@ -38,7 +38,7 @@ gf.log(msg='started') #write that the program is now running in the log file
 ser=serial.Serial(portname, baud) #open serial port
 time.sleep(2) # give time to the serial port in order to be ready, if not the code will be stuck forever without reading any data from serial port
 
-while(True):   #infinite loop for measure temperature, humidity, voc and pressure, interrupt if badflag turn true
+while(True):   #infinite loop for measure temperature, humidity, voc and pressure
     #read arduino data
     ser.write(b'R') # write R to ask data from arduino
     response=ser.readline()  #read arduino data from serial port, read until the end of the line
