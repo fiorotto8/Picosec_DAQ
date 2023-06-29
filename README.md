@@ -72,7 +72,7 @@ Arduino code used to control the bme680 sensor in order to measure pressure, tem
 This folder contains the code used to monitor (and control) the HV that is provided by a `CAEN R1470ET` power supply. The connection between the PS and the computer is operated with an ethernet cable, so the code is deloveped using the tcp/ip protocol but the folder contains also programs for the serial port communication usage.
 The principle of functioning is now given: with the command:
 - ``python3 rpc.py <specify_board_ip_address_here>`` 
-is initialysed the server that is connected with the PS. Then the coomand:
+is initialysed the server that is connected with the PS. Then the command:
 - ``python3 hv_logging.py`` 
 initialyses the client and it will connect to the server in order to get the data from the PS.
 This complicated system is needed because the PS doesn't support multiple clients connections, so if the computer starts the communication with the PS in order to automatically monitor the parameters, it became impossible to set new values of voltage or current and all the way round.
@@ -121,7 +121,7 @@ The arguments are:
 - `-c` to set the channel of the power supply in which operate the changes
 - `-b` to set the board in which operate the changes, if there are more than one. The default for this option is `0` so if there is only one board the right value for this argument is already setted.
 Please pay attenction of the board parameters limits defined in the manual of the PS you are using. In particular is useful to menction that the board CAEN R1470 has four channel numerated from 0 to 3 and NOT starting by 1.
-After the definitions the program will control if the user specify the channel number and if the number in input corrispond to an existing channel in the PS. The specification of the channel number in the command line is mandatory and if this parameter is not provided the code will print an error message in the log file and an error is raised before closing the program execution.
+After the definitions the program will control if the user specify the channel number and if the number in input corresponds to an existing channel in the PS. The specification of the channel number in the command line is mandatory and if this parameter is not provided the code will print an error message in the log file and an error is raised before closing the program execution.
 Then the program will take the measure of current and voltage in the selected channel.
 After that the code check for what parameter the user is asking for change and set the value specified in the command line. 
 Is possible to change simultaneously current and voltage in one channel, but not to change any values in more than one channel at time.
@@ -150,3 +150,10 @@ This programs are used in order to communicate with the board via serial port. S
 - When setting the parameters of the power supply pay attenction to not overcome the limits specified in the manual of the PS.
 - Pay attenction that the numeration of the channel starts from 0 and NOT from 1. When setting new values for the parameters the code will verify that the channel number is not bigger than the maximum existing but is impossible to check if the user write the right channel number! When starting `hv_setting.py` the option `-c <number_of_the_channel>` is mandatory.
 - The log path file is written in every program, so if you want to change it you must be careful to change it every time adding a new path.
+
+## Scope
+In this folder is stored the class definition for the scope. This class contains the definitions of the functions useful to control the oscilloscope and to set the automatic acquisition.
+The functions are defined based on the command written in the manual found at:
+`https://cdn.teledynelecroy.com/files/manuals/wr2_rcm_revb.pdf`.
+Not all the commands are improved because they're not necessary for the purpose of the project. 
+
