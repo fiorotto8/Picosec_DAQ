@@ -13,6 +13,10 @@ python3 -m pip install --user -U .
 ```
 These instructions will be repeated in the `HV_monitoring` folder.
 
+For the scope part:
+Install the vxi11 package to communicate with instruments, more info at:
+```https://github.com/python-ivi/python-vxi11```
+
 # Description of the programs
 In this section a brief description of the folders content and how it works will be given.
 
@@ -156,4 +160,20 @@ In this folder is stored the class definition for the scope. This class contains
 The functions are defined based on the command written in the manual found at:
 `https://cdn.teledynelecroy.com/files/manuals/wr2_rcm_revb.pdf`.
 Not all the commands are improved because they're not necessary for the purpose of the project. 
+The scope used is the LeCroy 610Zi.
 
+### Requirements
+Install the vxi11 package to communicate with instruments, more info at:
+```https://github.com/python-ivi/python-vxi11```
+### scope_class.py
+This file contains the class for the scope control.
+At the beginning of the file are defined some lists useful to debug and to control the parameters of the commands. Is important to change these values if the scope is not exactly the same used here.
+Function are generally commented and at the beginning of every section is written a brief message which contains the manual page where it is possible to find the information about the commands below.
+User defined function purpose is to save the acquired waveforms in the controller (PC where the code is running).
+
+### prova.py
+This file is a brief test of some functions.
+
+### notes 
+- if the scope is different from the one used here, change at least the channel name according to the number of channels the scope has.
+- be sure to install the requirements
