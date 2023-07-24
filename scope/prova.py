@@ -32,10 +32,15 @@ LeCroy=scope.Scope(ip_addr)
 
 #### prova 
 #LeCroy.directory("HDD","SWITCH", dir_path, debug=True)
-LeCroy.arm()
-LeCroy.sequence(segments=100)
+#LeCroy.arm()
+#LeCroy.sequence(segments=100)
 #LeCroy.store_setup("FILL")
 #LeCroy.store()
-#LeCroy.get_waveform(1)
+#LeCroy.get_waveform()
 #LeCroy.stop()
 #print(LeCroy.wf_setup)
+#LeCroy.save_waveform('/home/cms3/Desktop/Picosec_DAQ/scope/file', 2)
+#LeCroy.get_waveform(2)
+
+#LeCroy.directory("HDD", "SWITCH", "D:\\TestScope")
+#LeCroy.store()

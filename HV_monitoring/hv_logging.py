@@ -48,7 +48,10 @@ def main():
                     voltage = hv_client.get(board, channel, "VMon")
                     current = hv_client.get(board, channel, current_labels[board])
                     VSet = hv_client.get(board, channel, "VSet")
-                    ISet = hv_client.get(board, channel, "ISet")                
+                    ISet = hv_client.get(board, channel, "ISet")
+                    
+                    if ISet < current:
+                        gf.log("WARNING: TRIP in channel: "+str(channel), log_path)
                     
 
                     current_point = influxdb_client.Point("HV").tag("Board", board).tag("Channel", channel).field("IMon", current)

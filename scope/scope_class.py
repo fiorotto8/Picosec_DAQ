@@ -172,6 +172,18 @@ class Scope:
         hold_type=["TI","TL","EV","PS","PL","IS","P2","I2","OFF"]
         hold_value=[]
     """
+    
+    def offset(self, channel:int|str, offset:float, debug=False): #offset is in Volt
+        if type(channel) == int: #if channel is int it must be converted in a str with capital C in ahead the number
+            channel='C'+str(channel)
+        if channel in channel_name:
+            self.write(str(channel)+':OFST '+str(offset))
+        else:
+            print("Error: invalid channel name")
+              
+        if debug==True:
+            print(self.ask(str(channel)+':OFST?'))
+    
     ###########################################################################################
     ###  MASS STORAGE COMMANDS                                                                
     # More information can be found by reading the manual specified in the head part of this  
@@ -206,7 +218,7 @@ class Scope:
             
     def file_name(self, type:str|int, file_name:str, debug=False): #set the name for the saved traces
         if type(type) == int: #type can be inserted like the int number of the channel or a string like "C1"
-            type='C'+str(type) #is the input is a int variable it must be converted into a string with capital C in the head
+            type='C'+str(type) #if the input is a int variable it must be converted into a string with capital C in the head
         types=channel_name+t_name+['SETUP','HCOPY']
         if type in types:
             if type in channel_name+t_name:
@@ -239,7 +251,7 @@ class Scope:
         """
         modes=["OFF","WRAP","FILL"]
         if type(trace) == int: #trace can be inserted like the int number of the channel or a string like "C1"
-            trace='C'+str(trace) #is the input is a int variable it must be converted into a string with capital C in the head
+            trace='C'+str(trace) #if the input is a int variable it must be converted into a string with capital C in the head
         if trace =="ALL" or trace =="all":  #short for ALL_DISPLAYED
             trace="ALL_DISPLAYED"
         traces=channel_name+t_name+["ALL_DISPLAYED"]  
@@ -262,7 +274,7 @@ class Scope:
 
     def store(self, trace:str|int="ALL_DISPLAYED", destination:str="HDD"):
         if type(trace) == int: #trace can be inserted like the int number of the channel or a string like "C1"
-            trace='C'+str(trace) #is the input is a int variable it must be converted into a string with capital C in the head
+            trace='C'+str(trace) #if the input is a int variable it must be converted into a string with capital C in the head
         if trace =="ALL" or trace =="all":  #short for ALL_DISPLAYED
             trace="ALL_DISPLAYED"
         traces=channel_name+t_name+["ALL_DISPLAYED"]  
@@ -277,7 +289,7 @@ class Scope:
     def waveform_text(self, trace:str|int, text:str, debug=False):
         traces=channel_name+t_name
         if type(trace) == int: #trace can be inserted like the int number of the channel or a string like "C1"
-            trace='C'+str(trace) #is the input is a int variable it must be converted into a string with capital C in the head  
+            trace='C'+str(trace) #if the input is a int variable it must be converted into a string with capital C in the head  
         if trace in traces:
             if len(text)<=160: #verify text lenght
                 self.write(str(trace)+":WFTX '"+str(text)+"'")
@@ -296,7 +308,7 @@ class Scope:
         """
         traces=channel_name+t_name+["M1","M2","M3","M4"]
         if type(trace) == int: #trace can be inserted like the int number of the channel or a string like "C1"
-            trace='C'+str(trace) #is the input is a int variable it must be converted into a string with capital C in the head  
+            trace='C'+str(trace) #if the input is a int variable it must be converted into a string with capital C in the head  
         if trace in traces:
             if block in wf_data_blocks:
                 self.write(str(trace)+":WF? "+str(block))
@@ -325,11 +337,12 @@ class Scope:
     #########################################################################
     def waveform_name(self, dir_path:str, channel:str|int, name:str, extension:str='.trc'):
         if type(channel) == int: #channel can be inserted like the int number of the channel or a string like "C1"
-            channel='C'+str(channel) #is the input is a int variable it must be converted into a string with capital C in the head  
+            channel='C'+str(channel) #if the input is a int variable it must be converted into a string with capital C in the head  
         if channel in channel_name:
             return dir_path+"/"+channel+name+extension
         else:
             print("Error: invalid channel")
+
     def save_waveform(self,path:str, trace:str|int, block:str="ALL"):
         waveform=self.get_waveform(trace, block)
         file=open(path,"+xb")
