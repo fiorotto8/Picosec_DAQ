@@ -1,0 +1,31 @@
+# parameters definitions
+### IP address
+ip_addr = '193.205.68.62'
+
+### channel number 
+channel = 'C2'
+
+### sequence acquisition
+segments = 100
+
+### V and time division and offset
+time_div = '100NS'
+V_div    = 0.1
+V_offset = 0.
+
+### trigger parameters
+trg_coupling = 'DC'
+trg_source   = channel
+trg_level    = 0.7
+trg_mode     = 'NORM'
+trg_slope    = 'NEG'
+
+### bandwidth limit
+bwdl = 'OFF'
+
+### waveforms
+trace = channel
+
+### saving waveforms
+save_path = '/home/cms3/Desktop/TEST'
+wave_name = 'prova'

@@ -92,7 +92,7 @@ class Scope:
             print("trig_couple: "+self.ask(str(trig_source)+":TRCP?").replace(":TRCP","")) #print query result
 
     #the next function sintax is exactly the same as the previous
-    def trig_level(self, trig_source: int | str, level: str | float, debug=False):  #set the trigger level, for the trig_source option is possible to use int ore str like the previous function. The trigger level can be given as str or as a float, suffix V is optional since is the only possible unit of measure.
+    def trig_level(self, trig_source: int | str, level: str | float, debug=False):  #set the trigger level, for the trig_source option is possible to use int or str like the previous function. The trigger level can be given as str or as a float, suffix V is optional since is the only possible unit of measure.
         if type(trig_source) == int:
             trig_source='C'+str(trig_source)
         if trig_source in channel_name or trig_source in ["EX", "EX10"]:
@@ -150,7 +150,7 @@ class Scope:
         if debug==True:
             print(self.ask(str(channel)+':VDIV?'))
 
-    def wait_acquisition(self, timeout=None): #!impossibile provare da casa credo
+    def wait_acquisition(self, timeout=None):
         """
         This function prevents the scope from analyzing new commands until it has completed the current acquisition.
         The parameter timeout is optional and specifies the timeout is seconds after the scope will stop waitig.
@@ -183,6 +183,22 @@ class Scope:
               
         if debug==True:
             print(self.ask(str(channel)+':OFST?'))
+
+    def bandwidth_limit(self, channel:int|str, mode:str, debug=False): #offset is in Volt
+        modes=['OFF','ON','200MHZ']
+        if type(channel) == int: #if channel is int it must be converted in a str with capital C in ahead the number
+            channel='C'+str(channel)
+        if channel in channel_name:
+            if mode in modes:
+                self.write('BWL '+str(channel)+','+str(mode))
+            else:
+                print("Error: invalid bandwidth limit mode")
+        else:
+            print("Error: invalid channel name")
+              
+        if debug==True:
+            print(self.ask('BWL?'))
+
     
     ###########################################################################################
     ###  MASS STORAGE COMMANDS                                                                
@@ -335,11 +351,11 @@ class Scope:
     #########################################################################
     ### USER DEFINED
     #########################################################################
-    def waveform_name(self, dir_path:str, channel:str|int, name:str, extension:str='.trc'):
+    def waveform_name(self, dir_path:str, channel:str|int, name:str, extension:str='trc'):
         if type(channel) == int: #channel can be inserted like the int number of the channel or a string like "C1"
             channel='C'+str(channel) #if the input is a int variable it must be converted into a string with capital C in the head  
         if channel in channel_name:
-            return dir_path+"/"+channel+name+extension
+            return dir_path+"/"+channel+'-'+name+'.'+extension
         else:
             print("Error: invalid channel")
 

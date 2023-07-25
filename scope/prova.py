@@ -44,3 +44,7 @@ LeCroy=scope.Scope(ip_addr)
 
 #LeCroy.directory("HDD", "SWITCH", "D:\\TestScope")
 #LeCroy.store()
+
+LeCroy.sequence(segments=100)
+name=LeCroy.waveform_name('/home/cms3/Desktop/TEST',2,'prova')
+LeCroy.save_waveform(name, 2)
